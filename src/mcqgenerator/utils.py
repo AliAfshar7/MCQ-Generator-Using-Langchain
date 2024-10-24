@@ -6,7 +6,7 @@ import traceback
 def read_file(file):
     if file.name.endswith(".pdf"):
         try:
-            pdf_reader=PyPDF2.PdfFileReader(file)
+            pdf_reader=PyPDF2.PdfReader(file)
             text=""
             for page in pdf_reader.pages:
                 text+=page.extract_text()
@@ -27,20 +27,18 @@ def get_table_data(quiz_str):
     try:
         # convert the quiz from a str to dict
         quiz_dict=json.loads(quiz_str)
+        print(f"quiz dict in utils {quiz_dict}")
         quiz_table_data=[]
         
         # iterate over the quiz dictionary and extract the required information
         for key,value in quiz_dict.items():
             mcq=value["mcq"]
-            options=" || ".join(
-                [
-                    f"{option}-> {option_value}" for option, option_value in value["options"].items()
-                 
-                 ]
-            )
+            choices=" || ".join([
+                    f"{choice}:{choice_value}" for choice, choice_value in value["choices"].items()
+                 ])
             
             correct=value["correct"]
-            quiz_table_data.append({"MCQ": mcq,"Choices": options, "Correct": correct})
+            quiz_table_data.append({"MCQ": mcq, "Choices": choices, "Correct": correct})
         
         return quiz_table_data
         
