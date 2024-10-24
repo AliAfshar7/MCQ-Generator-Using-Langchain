@@ -9,7 +9,7 @@ from langchain.callbacks import get_openai_callback
 from src.mcqgenerator.MCQgenerator import generate_evaluate_quiz_chain
 from src.mcqgenerator.logger import logging
 
-with open('/home/aliaf/genai/mcqgen/Resp_temp.json','r') as file:
+with open('Resp_temp.json','r') as file:
     response_template = json.load(file)
 
 # Title of the app
